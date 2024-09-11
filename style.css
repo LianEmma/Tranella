@@ -1,0 +1,348 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    height: 100dvh;
+    background: #fefefe;
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+/* .wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10%;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.3);
+    background: #f5edd1;
+    z-index: 33;
+} */
+
+/* Default Styles (Desktop) */
+.wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10%;
+    width: 425px; /* Default width for larger screens */
+    max-width: 100%; /* Ensure it doesn’t exceed the screen width */
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.3);
+    background: #f5edd1;
+    z-index: 33;
+}
+
+
+/* Envelope Styles */
+.wrapper .envelop::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    border-top: 130px solid #ecdeb8;
+    border-left: 212px solid transparent;
+    border-right: 212px solid transparent;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out 0.7s;
+    z-index: 4;
+}
+
+.wrapper .envelop::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    border-top: 130px solid transparent;
+    border-left: 212px solid #e6cfa7;
+    border-bottom: 100px solid #e6cfa7;
+    border-right: 212px solid #e6cfa7;
+    transform-origin: top;
+    transition: all 0.5s ease-in-out 0.7s;
+    z-index: 4;
+}
+
+.wrapper .envelop {
+    position: relative;
+    width: 425px;
+    height: 230px;
+}
+
+.envelop .letter {
+    position: absolute;
+    width: 64%;
+    height: 100%;
+    background: #fff;
+    padding: 1.5rem;
+    padding-top: 1rem;
+    right: 20%;
+    bottom: 0;
+    border-radius: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    transition: all 1.8s ease-in-out;
+    transform: scale(0); /* Initially hidden */
+    z-index: 2;
+}
+
+/* Letter Animation with Bounce and Tilt */
+@keyframes bounceTilt {
+    0% {
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        transform: scale(0.9) rotate(-5deg);
+    }
+    70% {
+        transform: scale(0.8) rotate(3deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Delay letter animation to occur after envelope opens */
+.wrapper.open .envelop .letter {
+    animation: bounceTilt 1.5s ease-in-out;
+    transform: scale(1.8);
+    z-index: 22;
+    bottom: 40%;
+    transition-delay: 0.8s; /* Delays until envelope top opens */
+}
+
+.envelop .letter .text {
+    color: #706e6e;
+    font-size: 0.5em;
+}
+
+.envelop .letter h4 {
+    color: #706e6e;
+    font-size: 0.5em;
+}
+
+/* Heart Styles */
+.heart {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: red;
+    top: 50%;
+    left: 51.5%;
+    transform: translate(-85%, -60%) rotate(45deg);
+    z-index: 5;
+}
+
+.heart::before, .heart::after {
+    position: absolute;
+    content: '';
+    background: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -7.5px;
+}
+
+.heart::after {
+    right: 7.5px;
+}
+
+/* Smooth heart transition for open and close */
+.wrapper.open .heart {
+    transform: translate(-20%, -40%) rotate(230deg);
+    transition: transform 1s ease-in-out 0.7s; /* Syncs with envelope top animation */
+}
+
+.wrapper.open .envelop::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.wrapper .heart {
+    transition: transform 1s ease-in-out; /* Smooth transition when closing */
+}
+/* Floating Text Styles */
+.float-text {
+    width: 100%;
+    height: 100px;
+    margin: 0 auto;
+    position: absolute;
+    /* bottom: 20%; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; /* Initially hidden */
+    animation: floatTextAnimation 3s forwards ease-in-out; /* Smooth animation */
+    z-index: 10; /* Ensure it appears above other elements */
+}
+
+/* Floating text animation */
+@keyframes floatTextAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(100px); /* Start from below */
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0); /* Move to normal position */
+    }
+    100% {
+        top: 10%;
+        opacity: 1;
+        transform: translateY(-20px); /* Slight lift upwards */
+    }
+}
+
+/* Ensure float text appears only when envelope is opened */
+.wrapper.open .float-text {
+    top: 10%;
+    opacity: 1; /* Ensure visibility */
+    animation-delay: 5.8s; /* Delay to sync with envelope opening */
+}
+
+.big-heart {
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    animation: animate 1s infinite;
+}
+
+@keyframes animate {
+    0%, 100% {
+        transform: scale(1) rotate(45deg);
+    }
+    60% {
+        transform: scale(0.9) rotate(45deg);
+    }
+}
+
+.big-heart::before, .big-heart::after {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: rgb(255, 0, 0);
+    border-radius: 50%;
+}
+
+.big-heart::after {
+    right: 50%;
+}
+
+.big-heart::before {
+    top: -50%;
+}
+
+/* Pop-up Styles */
+.popup {
+    position: fixed;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 100;
+    text-align: center;
+    font-size: 1em;
+    opacity: 0;
+    animation: popupAnimation 1s forwards;
+}
+
+.popup-open {
+    background: #28a745;
+    bottom: 80%;
+}
+
+.popup-close {
+    background: #dc3545;
+    bottom: 90%;
+}
+
+@keyframes popupAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.show-popup {
+    display: block !important;
+}
+
+
+@media screen and (max-width: 480px) {
+    main{
+        box-sizing: border-box;
+        width: 100%;
+        height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+    }
+
+    .envelop .letter {
+        position: absolute;
+        width: 44%;
+        height: 100%;
+        background: #fff;
+        padding: 0..3rem;
+        padding-top: 1rem;
+        right: 20%;
+        bottom: 0;
+        border-radius: 4px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+        transition: all 1.8s ease-in-out;
+        transform: scale(0); /* Initially hidden */
+        z-index: 2;
+    }
+
+    .letter .text{
+        font-size: 0.3em;
+        padding: 0.2rem;
+    }
+
+    .wrapper.open .envelop .letter {
+        height: 280px;
+    }
+}
+
+
+/* Media Query for Tablets */
+@media screen and (max-width: 768px) {
+    .wrapper {
+        width: 80%; /* Set width relative to screen size */
+        max-width: 350px; /* Ensure max width for smaller screens */
+        bottom: 15%; /* Adjust positioning if necessary */
+    }
+}
+
+/* Media Query for Mobile Phones *
+@media screen and (max-width: 480px) {
+    .wrapper {
+        left: 2%;
+        width: 50%; /* Wider width for mobile screens 
+        max-width: 10px; /* Ensure max width for very small screens      bottom: 20%; /* Adjust positioning if necessary 
+    }
+}
+*/
+.div{
+    display: flex;
+    font-size: 0.6em;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-weight: 600;
+    gap: 5px;
+    color: orangered;
+}
